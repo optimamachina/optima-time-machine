@@ -1,0 +1,13 @@
+/* Optima Time Machine — toolbar popup, on optima.css. */
+html, body { height: auto; }
+body { width: 260px; padding: 18px 18px 20px; display: grid; gap: 14px; }
+.top { display: flex; align-items: center; gap: 10px; }
+.top .word { font-size: 18px; }
+.year { display: flex; align-items: baseline; justify-content: center; gap: 8px; padding: 16px 10px; }
+.year output { font-size: 40px; font-weight: 700; letter-spacing: -.05em; color: var(--blue); font-variant-numeric: tabular-nums; text-shadow: 1px 1px 0 #fff; }
+.year span { color: var(--ink-2); font-size: 12.5px; }
+.toggle { color: var(--ink); font-size: 13.5px; }
+.stat, .hint { margin: 0; }
+.hint { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.hint:empty { display: none; }
+#open { justify-self: start; }

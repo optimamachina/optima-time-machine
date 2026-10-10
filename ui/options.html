@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optima Time Machine</title>
+<link rel="icon" href="../icons/icon32.png">
+<link rel="stylesheet" href="optima.css">
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+
+<aside class="side">
+  <header class="brand">
+    <img class="logo" src="img/logo.png" alt="" width="72" height="72">
+    <h1 class="word"><span class="lt">optima</span> <b>time machine</b></h1>
+    <p class="tagline">youtube, frozen in the year you pick</p>
+  </header>
+
+  <div class="year-screen well-deep">
+    <span class="year-label">nothing after</span>
+    <output id="yearOut" for="cutoff">2009</output>
+  </div>
+
+  <nav class="tray" aria-label="sections">
+    <a href="#wall"><span>the wall</span><small>what gets hidden</small></a>
+    <a href="#feed"><span>the feed</span><small>home and sidebar</small></a>
+    <a href="#collecting"><span>collecting</span><small>finding old videos</small></a>
+    <a href="#seeds"><span>search terms</span><small>where it starts</small></a>
+    <a href="#learning"><span>learning</span><small>off unless you want it</small></a>
+    <a href="#pool"><span>the pool</span><small>what's been found</small></a>
+    <div class="sep"></div>
+    <a href="#privacy"><span>privacy</span><small>what leaves this computer</small></a>
+  </nav>
+
+  <p class="saved" id="saved" role="status" aria-live="polite"></p>
+  <p class="side-foot"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> settings save as you change them</p>
+</aside>
+
+<main class="shell">
+
+  <section class="slab panel" id="wall">
+    <h2>the wall</h2>
+    <div class="field">
+      <div class="head"><label for="cutoff">hide everything uploaded after</label></div>
+      <input type="range" id="cutoff" min="2005" max="2024" step="1" value="2009">
+      <div class="scale"><span>2005</span><span>2024</span></div>
+    </div>
+
+    <label class="toggle"><input type="checkbox" id="enabled"><span class="switch"></span>
+      <span class="t">filtering on<em>off shows youtube exactly as it comes.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="strict"><span class="switch"></span>
+      <span class="t">drop videos whose age is unclear<em>youtube says "14 years ago", not a date. when that range straddles your cutoff, on hides the video. a stricter wall, a slightly smaller feed.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="killShorts"><span class="switch"></span>
+      <span class="t">remove shorts everywhere<em>shelves, sidebar cards and the shorts player, whatever their year.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="searchOldOnly"><span class="switch"></span>
+      <span class="t">search only the old years<em>adds youtube's own "before:" to every search, so results are old videos instead of today's with the wall applied afterwards. skipped if you type before: or after: yourself.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="channelPagesUnfiltered"><span class="switch"></span>
+      <span class="t">show every year on channel pages<em>see whether an old channel ever posted again, without switching the wall off.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="subsUnfiltered"><span class="switch"></span>
+      <span class="t">show every year in subscriptions<em>your subscriptions as youtube sends them.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="blockWatchPage"><span class="switch"></span>
+      <span class="t">cover the player on newer videos<em>uses the exact upload date, so it catches whatever slips past: a link from outside, a playlist, a channel page.</em></span></label>
+    <label class="toggle indent"><input type="checkbox" id="allowEscapeHatch"><span class="switch"></span>
+      <span class="t">keep a "watch it anyway" button on that cover</span></label>
+
+    <div class="field">
+      <div class="head">hidden channels</div>
+      <p class="note">channels you hid from a card's "…" menu. click one to bring it back.</p>
+      <div id="hiddenChannels" class="terms">none.</div>
+    </div>
+  </section>
+
+  <section class="slab panel" id="feed">
+    <h2>the feed</h2>
+    <p class="note">filtering alone would leave the homepage nearly empty, so it is rebuilt from old videos the extension has found instead.</p>
+    <label class="toggle"><input type="checkbox" id="takeOverHome"><span class="switch"></span>
+      <span class="t">replace the homepage</span></label>
+    <label class="toggle"><input type="checkbox" id="sidebarRelated"><span class="switch"></span>
+      <span class="t">search for more related old videos<em>the sidebar always shows the old videos from youtube's own related list, usually only a handful. this adds more, found by searching the old years for the video's title, tags and channel. two or three searches the first time you open a video, then remembered for a few days.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="autoplayFromPool"><span class="switch"></span>
+      <span class="t">keep playing old videos when youtube's autoplay is off<em>with youtube's autoplay on, the next video is always an old one anyway.</em></span></label>
+    <label class="toggle"><input type="checkbox" id="showYearBadge"><span class="switch"></span>
+      <span class="t">show the year on thumbnails<em>underlined when the date is exact rather than worked out from "14 years ago".</em></span></label>
+  </section>
+
+  <section class="slab panel" id="collecting">
+    <div class="panel-head">
+      <h2>collecting</h2>
+      <span class="chip"><span id="poolCount">0</span> videos found</span>
+    </div>
+    <p class="note">every old video you open adds its related videos to the pool. in the background the extension slowly walks outward from there and digs through old playlists people made at the time. these requests are anonymous: youtube sees a logged-out visitor, not you.</p>
+    <label class="toggle"><input type="checkbox" id="crawlEnabled"><span class="switch"></span>
+      <span class="t">keep collecting in the background</span></label>
+    <label class="toggle"><input type="checkbox" id="crawlOnlyWhenIdle"><span class="switch"></span>
+      <span class="t">only while you're away from the computer</span></label>
+    <label class="toggle"><input type="checkbox" id="crawlPlaylists"><span class="switch"></span>
+      <span class="t">dig through old playlists</span></label>
+    <label class="toggle"><input type="checkbox" id="seedSearches"><span class="switch"></span>
+      <span class="t">run searches from the search terms</span></label>
+
+    <div class="field">
+      <div class="head"><label for="crawlPerMinute">requests per minute</label><output class="val" id="rateOut">4</output></div>
+      <input type="range" id="crawlPerMinute" min="1" max="12" step="1" value="4">
+      <p class="note">four is about the pace of a person clicking around.</p>
+    </div>
+
+    <div class="field">
+      <div class="head"><label for="crawlDailyCap">requests per day, at most</label><span class="muted" id="dayUsed"></span></div>
+      <input type="number" id="crawlDailyCap" min="0" max="5000" step="50" inputmode="numeric">
+      <p class="note">0 means no limit. if youtube ever says slow down, collecting pauses on its own and waits longer each time.</p>
+    </div>
+
+    <div class="actions">
+      <button id="crawlNow" class="pill" type="button">collect now</button>
+      <button id="primePool" class="pill pill-blue" type="button">run a round of searches</button>
+    </div>
+    <p class="note">"collect now" makes one request straight away, even while you're here. "run a round of searches" fires a few searches back to back, for an empty pool. about twenty seconds.</p>
+    <p id="crawlStatus" class="status"></p>
+  </section>
+
+  <section class="slab panel" id="seeds">
+    <h2>search terms</h2>
+    <p class="note">starting points, nothing more. once the pool has a few hundred videos the related-video trail does most of the work. untick a whole category, cross out a term, or add your own.</p>
+    <div class="addrow">
+      <input type="text" id="seedInput" placeholder="a search term, like tech deck tricks" autocomplete="off">
+      <select id="seedCluster" aria-label="category"></select>
+      <button id="seedAdd" class="pill" type="button">add</button>
+    </div>
+    <div id="clusters" class="clusters"></div>
+  </section>
+
+  <section class="slab panel" id="learning">
+    <h2>learning</h2>
+    <p class="note">off by default, so what you watch never changes what you're shown, like before the algorithm. switch it on and the extension counts words from titles you watch; a word only counts once it shows up in two different videos. it all stays on this computer.</p>
+    <label class="toggle"><input type="checkbox" id="learnInterests"><span class="switch"></span>
+      <span class="t">learn from what you watch</span></label>
+
+    <div class="terms-box">
+      <div class="head">words that keep coming up <span class="muted">cross out anything wrong</span></div>
+      <div id="terms" class="terms">nothing yet.</div>
+    </div>
+    <div class="terms-box">
+      <div class="head">channels you watch most</div>
+      <div id="channels" class="terms">nothing yet.</div>
+    </div>
+
+    <label class="toggle"><input type="checkbox" id="aiExpansion"><span class="switch"></span>
+      <span class="t">also ask an ai model for search terms, once a day<em>the one feature that sends anything off this computer, and only with your own key. it sends the cutoff year and up to 30 of the words above. never titles, channels, video ids or anything about you. needs learning on.</em></span></label>
+
+    <div class="field ai-fields">
+      <div class="head">which model</div>
+      <div class="radios">
+        <label><input type="radio" name="aiProvider" value="gemini"> google gemini <span class="muted">free tier</span></label>
+        <label><input type="radio" name="aiProvider" value="anthropic"> anthropic claude <span class="muted">paid, cheap</span></label>
+      </div>
+
+      <div id="geminiFields">
+        <label class="sub" for="geminiKey">gemini api key</label>
+        <input type="password" id="geminiKey" placeholder="AIza..." autocomplete="off" spellcheck="false">
+        <p class="note">free from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">aistudio.google.com/apikey</a>. kept in this browser only, apart from the other settings, and sent only to google.</p>
+        <label class="sub" for="geminiModel">model</label>
+        <input type="text" id="geminiModel" placeholder="gemini-3.5-flash" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div id="anthropicFields">
+        <label class="sub" for="anthropicKey">anthropic api key</label>
+        <input type="password" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+        <p class="note">from <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer">console.anthropic.com</a>. kept in this browser only, apart from the other settings, and sent only to anthropic. a daily run costs a fraction of a cent.</p>
+        <label class="sub" for="aiModel">model</label>
+        <input type="text" id="aiModel" placeholder="claude-haiku-4-5" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div class="actions">
+        <button id="runAi" class="pill" type="button">ask now</button>
+        <button id="forgetKeys" class="link" type="button">forget my keys</button>
+      </div>
+      <p id="aiStatus" class="status"></p>
+    </div>
+
+    <div class="terms-box" id="aiSeedsBox" hidden>
+      <div class="head">terms it suggested <span class="muted">cross out anything wrong</span></div>
+      <div id="aiSeeds" class="terms"></div>
+    </div>
+    <div class="terms-box" id="bannedBox" hidden>
+      <div class="head">crossed out <span class="muted">click to bring back</span></div>
+      <div id="banned" class="terms"></div>
+    </div>
+  </section>
+
+  <section class="slab panel" id="pool">
+    <div class="panel-head">
+      <h2>the pool</h2>
+      <button id="refreshRecent" class="pill pill-sm" type="button">refresh</button>
+    </div>
+    <p class="note">the twenty newest finds. a missing title, a year past your cutoff, or something you'd never want is worth reporting.</p>
+    <div id="recent" class="recent">nothing found yet.</div>
+
+    <div class="groove"></div>
+    <div class="field">
+      <div class="head">resetting</div>
+      <p class="note">"clean out" removes entries with a broken id, no title or a year past the cutoff. run it after an update. "clear out" is for after you lower the cutoff. "empty" starts over from nothing.</p>
+      <div class="actions">
+        <button id="scrub" class="pill" type="button">clean out bad entries</button>
+        <button id="purge" class="pill" type="button">clear out videos past the cutoff</button>
+        <button id="clearPool" class="pill danger" type="button">empty the pool</button>
+      </div>
+      <p id="dangerStatus" class="status"></p>
+    </div>
+  </section>
+
+  <section class="slab panel" id="privacy">
+    <h2>privacy</h2>
+    <ul class="ticks">
+      <li>no account, no analytics, no tracking, no server of ours. nothing is ever sent to optima machina.</li>
+      <li>everything the extension learns and collects (the pool, your settings, your hidden channels) stays in this browser.</li>
+      <li>the searches it makes on its own go to youtube anonymously, without your cookies or sign-in, so they never show up in your history or change your recommendations.</li>
+      <li>only "save to watch later" and "save to playlist", which you click yourself, go to youtube as you.</li>
+      <li>the ai feature is off unless you switch it on, needs your own key, and sends only the words listed above to the model you picked. the extension can't reach those servers at all until you allow it.</li>
+      <li>youtube's thumbnails load from youtube's image servers, the same as on youtube.</li>
+    </ul>
+  </section>
+
+</main>
+
+<script src="../src/shared/seeds.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

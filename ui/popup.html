@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Optima Time Machine</title>
+<link rel="stylesheet" href="optima.css">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <h1 class="word"><span class="lt">optima</span> <b>time machine</b></h1>
+  </header>
+
+  <div class="year screen">
+    <output id="year">2009</output>
+    <span>and earlier</span>
+  </div>
+
+  <label class="toggle"><input type="checkbox" id="enabled"><span class="switch"></span>filtering on</label>
+
+  <p class="stat"><span class="chip"><span id="pool">0</span> videos found</span></p>
+  <p id="hint" class="hint"></p>
+
+  <button id="open" class="pill" type="button">settings</button>
+
+<script src="../src/shared/seeds.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
